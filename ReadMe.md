@@ -16,10 +16,10 @@ To VS Code—and any extensions like Codex or Gemini Code assist, language serve
 ---
 
 ## Requirements
-
+On the first run of the script, it will have a user input asking you if you'd like to install the required external dependencies (bubblewrap)
 * **Linux or WSL**
 * **bubblewrap (`bwrap`)**: Used to create the sandbox.
-* **VS Code CLI (`code`)**: Must be available in your `PATH`.
+* **VS Code CLI (`code`)**: Must be available in PATH.
 * **Bash 4+**
 
 ---
