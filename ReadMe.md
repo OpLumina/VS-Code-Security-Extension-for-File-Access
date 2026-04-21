@@ -1,4 +1,4 @@
-# vmask
+# vmask.sh
 
 A privacy shield for VS Code. Before launching the editor, `vmask.sh` mounts an empty `tmpfs` filesystem over any paths you want hidden, making them appear blank to VS Code (and any extensions, language servers, or plugins running inside it). When you close VS Code the mounts are automatically removed and your original files are restored.
 
