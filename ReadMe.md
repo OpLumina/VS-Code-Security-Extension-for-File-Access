@@ -2,7 +2,7 @@
 
 A rootless privacy shield for VS Code. `vmask` uses **Linux namespaces** (via `bubblewrap`) to launch VS Code in a sandboxed environment where sensitive directories are replaced by empty `tmpfs` mounts. 
 
-To VS Code—and any extensions, language servers, or plugins running inside it—the masked folders appear completely empty. Because this happens in a private namespace, your original files remain fully accessible to the rest of your system and are never modified.
+To VS Code—and any extensions like Codex or Gemini Code assist, language servers, or plugins running inside it, the masked folders appear completely empty. Because this happens in a private namespace, your original files remain fully accessible to the rest of your system and are never modified.
 
 ---
 
