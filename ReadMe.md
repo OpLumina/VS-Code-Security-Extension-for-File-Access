@@ -6,7 +6,7 @@ A privacy shield for VS Code. Before launching the editor, `vmask.sh` mounts an 
 
 ## How it works
 
-`tmpfs` is an in-memory filesystem. Mounting it over a directory doesn't delete or move anything — it just shadows the real contents for the lifetime of the mount. The moment the mount is removed, the original files reappear exactly as they were.
+`tmpfs` is an in-memory filesystem. Mounting it over a directory doesn't delete or move anything, it just shadows the real contents for the lifetime of the mount. The moment the mount is removed, the original files reappear exactly as they were.
 
 ---
 
@@ -50,7 +50,7 @@ A privacy shield for VS Code. Before launching the editor, `vmask.sh` mounts an 
 
 Both files use the same format: one path per line. Lines starting with `#` and blank lines are ignored.
 
-### `.vsignore` — paths to mask
+### `.vsignore`, paths to mask
 
 ```
 # Mask your SSH keys
@@ -63,9 +63,9 @@ Both files use the same format: one path per line. Lines starting with `#` and b
 /home/alice/.aws/credentials
 ```
 
-**Wildcard support:** Lines containing `*` are expanded as shell globs using `compgen -G`. Each matching path is resolved and added to the mask list individually. Wildcards are expanded safely — no `eval` is used, so shell injection via crafted filenames is not possible.
+**Wildcard support:** Lines containing `*` are expanded as shell globs using `compgen -G`. Each matching path is resolved and added to the mask list individually. Wildcards are expanded safely, no `eval` is used, so shell injection via crafted filenames is not possible.
 
-### `.vsallow` — exceptions to the mask list
+### `.vsallow`, exceptions to the mask list
 
 Paths listed here are never masked, even if they match an entry (including a wildcard entry) in `.vsignore`. The allow-list is processed first so it always wins.
 
@@ -90,7 +90,7 @@ Paths listed here are never masked, even if they match an entry (including a wil
 1. Allow-list is loaded from `.vsallow`.
 2. Mask list is built from `.vsignore`, with wildcard expansion and allow-list filtering applied.
 3. `tmpfs` is mounted over each path in the mask list.
-4. VS Code is launched with `code --wait` — the script blocks until the editor window closes.
+4. VS Code is launched with `code --wait`, the script blocks until the editor window closes.
 5. On exit (including `Ctrl+C` or unexpected termination), a `trap` fires and unmounts all paths **in reverse order**, ensuring nested mounts are removed cleanly.
 
 ---
@@ -110,4 +110,4 @@ Paths listed here are never masked, even if they match an entry (including a wil
 - **Sudo prompt:** The first `mount` call will trigger a `sudo` password prompt if your session has expired. You can avoid repeated prompts by running `sudo -v` before launching the script.
 - **Nested paths:** If you mask a parent directory and a child directory, mount ordering matters. The current implementation mounts in hash-map iteration order (non-deterministic). If ordering is critical for your setup, list paths explicitly rather than relying on wildcards to capture both parent and child.
 - **Does not affect processes already running:** If VS Code or a language server is already open with a file loaded, masking its source path won't unload it from memory.
-- **tmpfs contents are writable:** VS Code can write new files into a masked directory during the session. Those files disappear when the mount is removed. This is intentional — it means no writes can leak back to the real path — but be aware if an extension tries to cache something there.
+- **tmpfs contents are writable:** VS Code can write new files into a masked directory during the session. Those files disappear when the mount is removed. This is intentional, it means no writes can leak back to the real path, but be aware if an extension tries to cache something there.
