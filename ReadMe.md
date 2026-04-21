@@ -22,7 +22,7 @@ A privacy shield for VS Code. Before launching the editor, `vmask.sh` mounts an 
 ## Usage
 
 ```bash
-./vmask.sh [--mask FILE] [--allow FILE] [TARGET_DIR]
+./vmask.sh --mask <filepath> --allow <filepath> <folder/file to open with VS>
 ```
 
 | Argument | Default | Description |
